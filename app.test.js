@@ -2,9 +2,9 @@ const axios = require("axios");
 const MockAdapter = require("axios-mock-adapter");
 const request = require("supertest");
 const app = require("./app");
-const testData = require("./testData.test.js");
-const { HATCHWAY_BASE_URL } = require("./apiUtils/apiUtils");
+const testData = require("./testData.js");
 
+const HATCHWAY_BASE_URL = "https://api.hatchways.io/assessment/blog/posts";
 describe("api calls", () => {
   beforeEach(() => {
     const axiosMock = new MockAdapter(axios);

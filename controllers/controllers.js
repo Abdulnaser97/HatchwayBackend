@@ -33,6 +33,7 @@ const postsController = () => {
 
       res.status(200).json({ posts: sortedPosts });
     } catch (e) {
+      console.log(e);
       const errorCode = e.code;
       const errorMessage =
         errorCode && errorMessages[errorCode]

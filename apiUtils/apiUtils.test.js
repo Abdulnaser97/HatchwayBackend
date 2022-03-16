@@ -3,19 +3,19 @@ const {
   retrievePosts,
   filterPosts,
   sortPosts,
-  HATCHWAY_BASE_URL,
 } = require("./apiUtils");
 const {
   INVALID_SORTBY_PARAM,
   INVALID_DIRECTION_PARAM,
   MISSING_TAG_PARAMS,
-  DEFAULT,
   errorMessages,
   newError,
 } = require("../errorCodes");
-const testData = require("../testData.test");
+const testData = require("../testData");
 const axios = require("axios");
 const MockAdapter = require("axios-mock-adapter");
+
+const HATCHWAY_BASE_URL = "https://api.hatchways.io/assessment/blog/posts";
 
 describe("validateParams", () => {
   it("should return tags, sortBy, and directionParams", () => {
@@ -78,6 +78,7 @@ describe("validateParams", () => {
 });
 
 describe("retrievePosts", () => {
+  beforeEach(() => jest.resetModules());
   it("should return posts from each tag", async () => {
     const axiosMock = new MockAdapter(axios);
     const postsWithHistoryTag = testData.unsorted[0];
@@ -98,9 +99,6 @@ describe("retrievePosts", () => {
     };
 
     const posts = await retrievePosts(queryParams);
-
-    // expect(axios.get).toHaveBeenCalledWith(HATCHWAY_BASE_URL + "?tag=history");
-    // expect(axios.get).toHaveBeenCalledWith(HATCHWAY_BASE_URL + "?tag=tech");
     expect(posts).toEqual(testData.unsorted);
   });
 

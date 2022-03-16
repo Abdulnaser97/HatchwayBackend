@@ -1,15 +1,17 @@
+require("dotenv").config();
 const axios = require("axios");
 const {
   INVALID_SORTBY_PARAM,
   INVALID_DIRECTION_PARAM,
   MISSING_TAG_PARAMS,
   FAILED_TO_CALL_HATCHWAY_URL,
-  DEFAULT,
-  errorMessages,
   newError,
 } = require("../errorCodes");
 
-const HATCHWAY_BASE_URL = "https://api.hatchways.io/assessment/blog/posts";
+const HATCHWAY_BASE_URL = process.env.HATCHWAY_BASE_URL;
+
+// Using Redis here is more scalable, but thought to keep it simple.
+const simpleCache = {};
 
 function validateParams(params) {
   try {
@@ -49,10 +51,16 @@ async function retrievePosts(params) {
   try {
     const { tags, sortBy, direction } = params;
 
+    const unChachedTags = tags.filter((tag) => !(tag in simpleCache));
     // Concurrently retrieve posts from each tag
-    const perTagRequests = tags.map((tag) => {
-      const outboundURL = `${HATCHWAY_BASE_URL}?tag=${tag}`;
-      return axios.get(outboundURL);
+    const perTagRequests = unChachedTags.map((tag) => {
+      if (tag in simpleCache) {
+        // return promise of cached data
+        return simpleCache[tag];
+      } else {
+        const outboundURL = `${HATCHWAY_BASE_URL}?tag=${tag}`;
+        return axios.get(outboundURL);
+      }
     });
 
     // Wait for all api calls to return
@@ -66,6 +74,21 @@ async function retrievePosts(params) {
         // Also, we can have an internal logger that logs the error message internally in this case
         throw newError(FAILED_TO_CALL_HATCHWAY_URL, error);
       });
+
+    // Store api posts in cache
+    for (let i = 0; i < posts.length; i++) {
+      if (unChachedTags[i] && !simpleCache[unChachedTags[i]]) {
+        simpleCache[unChachedTags[i]] = posts[i];
+      }
+    }
+
+    // Concatenate posts from api calls with chached posts
+    tags.forEach((tag) => {
+      if (tag in simpleCache && !unChachedTags.includes(tag)) {
+        posts.push(simpleCache[tag]);
+      }
+    });
+
     return posts;
   } catch (e) {
     throw e;
@@ -89,11 +112,9 @@ function filterPosts(posts) {
 }
 
 function sortPosts(posts, key, direction) {
-  // items are sorted by ID ascendingly by default, so return immediately
   if (!key && !direction) {
     return posts;
   }
-
   const sortKey = key || "id";
 
   if (direction === "desc") {
@@ -112,5 +133,4 @@ module.exports = {
   retrievePosts,
   filterPosts,
   sortPosts,
-  HATCHWAY_BASE_URL,
 };
