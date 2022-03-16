@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>HatchWay API Proxy</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body>
+    <h1>HatchWay API Proxy</h1>
+    <h3>Routes</h3>
+    <li>https://localhost:8080/api/posts</li>
+    <h3>Params</h3>
+    <h5>
+      <li>
+        Tags (required) [ history, tech, health, ... ] | e.g.
+        <a href="https://localhost:8080/api/posts?tags=history,tech">
+          https://localhost:8080/api/posts?tags=history,tech
+        </a>
+      </li>
+    </h5>
+
+    <h5>
+      <li>
+        SortBy (optional) { id, reads, likes, poularity } | e.g.
+        <a
+          href="https://localhost:8080/api/posts?tags=history,tech&sortBy=popularity"
+        >
+          https://localhost:8080/api/posts?tags=history,tech&sortBy=popularity
+        </a>
+      </li>
+    </h5>
+
+    <h5>
+      <li>
+        Direction (optional) { asc, desc } | e.g.
+        <a
+          href="https://localhost:8080/api/posts?tags=history,tech&sortBy=popularity&direction=desc"
+        >
+          https://localhost:8080/api/posts?tags=history,tech&sortBy=popularity&direction=desc
+        </a>
+      </li>
+    </h5>
+  </body>
+</html>
