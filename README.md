@@ -1,4 +1,4 @@
-# HatchwayBackend
+# TDD API Proxy
 
 This app was developed through Test-Driven Development, it retrieves posts from a given endpoint, processes them, and stores them in cache for subsequent calls.
 
