@@ -1,0 +1,6 @@
+{
+	"drawioXML": "<mxfile>\n  <diagram id=\"aU5xApHDfcFrCw9kc7DO\" name=\"Page-1\">\n    <mxGraphModel dx=\"1886\" dy=\"904\" grid=\"0\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"0\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n      <root>\n        <mxCell id=\"0\" />\n        <mxCell id=\"1\" parent=\"0\" />\n        <mxCell id=\"PXcun3C4DIV6Agq_IODY-1\" value=\"sth\" style=\"shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;\" parent=\"1\" vertex=\"1\">\n          <mxGeometry x=\"41\" y=\"207\" width=\"120\" height=\"60\" as=\"geometry\" />\n        </mxCell>\n      </root>\n    </mxGraphModel>\n  </diagram>\n</mxfile>\n",
+	"fileName": "GitHub-API.CodeCanvas",
+	"fileURL": "https://raw.githubusercontent.com/Abdulnaser97/GitHub-API/ffe434439976165d3946ceede37decccfdd3382e/GitHub-API.CodeCanvas",
+	"repoData": {}
+}
